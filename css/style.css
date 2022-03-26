@@ -1,0 +1,686 @@
+/* merriweather-300 */
+@font-face {
+  font-family: 'Merriweather';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 300;
+  src: local(''),
+    url('../fonts/merriweather-v28-latin-300.woff2') format('woff2'),
+    url('../fonts/merriweather-v28-latin-300.woff') format('woff');
+}
+
+/* oswald-regular */
+@font-face {
+  font-family: 'Oswald';
+  font-style: normal;
+  font-display: swap;
+  font-weight: 400;
+  src: local(''),
+    url('../fonts/oswald-v47-latin-regular.woff2') format('woff2'),
+    url('../fonts/oswald-v47-latin-regular.woff') format('woff');
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  cursor: none !important;
+}
+
+body {
+  /* 320 для того чтобы ничего не ломалось при сжатии сайта меньше 320 */
+  min-width: 320px;
+  font-family: 'Oswald', sans-serif;
+  line-height: 24px;
+  color: #000;
+}
+
+a {
+  text-decoration: none;
+  /* наследуются от боди */
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+}
+
+.site-container {
+  overflow: hidden;
+}
+
+.visually-hidden {
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  margin: -1px;
+}
+
+/* PRELOADER */
+
+.preloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  overflow: hidden;
+  /* чтобы был всегда 100% размеров */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+  background-color: #B1B3B2;
+}
+
+.preloader__back {
+  font-family: 'Merriweather', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 360px;
+  line-height: 453px;
+  color: #fff;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  transform: translateX(7%);
+  animation: preloader 20s linear;
+}
+
+.preloader__forward {
+  margin: 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -20%);
+  font-family: 'Merriweather', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 72px;
+  line-height: 91px;
+  opacity: 0;
+  transition: opacity .3s cubic-bezier(.770, .125, .265, 1.040), transform .3s cubic-bezier(.770, .125, .265, 1.040);
+}
+
+.preloader__background {
+  width: 330px;
+  height: 220px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
+
+.preloader__background::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 100%;
+  background-color: #fff;
+  transition: width .3s cubic-bezier(.770, .125, .265, 1.040);
+}
+
+@keyframes preloader {
+  0% {
+    transform: translateX(5%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+/* preloader animation */
+
+/* стартует сайт, и дается сайт, чтобы задний текст был немного виден */
+.preloader-animation .preloader__back {
+  opacity: .15;
+}
+
+.preloader-animation .preloader__forward {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+}
+
+.preloader-animation .preloader__background::before {
+  transition-delay: .5s;
+  width: 330px;
+}
+
+/* для того, чтобы скрыть все плавно */
+.preloader-hidden .preloader__back {
+  opacity: 0;
+  transition: opacity .3s cubic-bezier(.770, .125, .265, 1.040), transform .3s cubic-bezier(.770, .125, .265, 1.040);
+}
+
+.preloader-hidden .preloader__background::before {
+  width: 0;
+}
+
+.preloader-hidden .preloader__forward {
+  opacity: 0;
+  transition-delay: .5s;
+  transform: translate(-50%, -50%);
+  transition: opacity .3s ease-in-out;
+}
+
+.preloader-none {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease-in-out, visibility .3s ease-in-out;
+}
+
+.mouse {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 45px;
+  height: 45px;
+  border-radius: 100%;
+  z-index: 9999999;
+  pointer-events: none;
+}
+
+.mouse::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background: #D7D7D7;
+  z-index: 2;
+  box-shadow: 4px 4px 4px #CCCACA;
+  transition: opacity .3s ease-in-out;
+}
+
+.mouse::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 55px;
+  height: 55px;
+  border-radius: 100%;
+  background: #CDCDCD;
+  transition: opacity .3s ease-in-out;
+}
+
+.mouse__view {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  line-height: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #fff;
+  background-color: #000;
+  border-radius: 100%;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+}
+
+.view-visible .mouse__view {
+  opacity: 1;
+  transition: opacity .3s ease-in-out;
+}
+
+.links-visible::after {
+  border: 4px solid #cdcdcd;
+  transform: translate(-50%, -50%) scale(0.5);
+  background-color: transparent;
+  transition: .3s;
+}
+
+.links-visible::before {
+  opacity: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+/* HEADER */
+
+.header {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  z-index: 20;
+  min-width: 320px;
+  padding: 30px 0;
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.logo__letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000;
+  border-radius: 100%;
+  width: 37px;
+  height: 37px;
+  margin-right: 10px;
+}
+
+.header__nav {
+  margin-left: 16.5%;
+}
+
+.nav__list {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.nav__link {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.nav__item:not(:last-child) {
+  margin-right: 63px;
+}
+
+.header__burger {
+  margin-left: auto;
+}
+
+.burger {
+  position: relative;
+  width: 60px;
+  height: 9px;
+  border: none;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.burger::before,
+.burger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+}
+
+.burger::before {
+  top: 0;
+}
+
+.burger::after {
+  bottom: 0;
+}
+
+/* MAIN SECTION  */
+
+.main-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* релэтив на всякий случай, так слайды будут абсолютными */
+  position: relative;
+  /* чтобы блок был на весь экран */
+  height: 100vh;
+  min-height: 750px;
+  transition: background-color 1s;
+}
+
+.slide-1 {
+  background-color: #b1b3b2;
+}
+
+.slide-2 {
+  background-color: #f1f1f1;
+}
+
+.slide-3 {
+  background-color: #b5b7b4;
+}
+
+.slide-4 {
+  background-color: #b5b8c2;
+}
+
+.slide-5 {
+  background-color: #c4c3c0;
+}
+
+/* враппер нужен для того, чтобы левую и правую часть раскидать по сторонам */
+.wrapper {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* относительно него отталкиваются слайдеры */
+.slides-container__left {
+  position: relative;
+  width: 48%;
+  /* чтобы не сжимался элемент */
+  flex-shrink: 0;
+  padding-top: 67px;
+}
+
+.slides-container__slide {
+  position: absolute;
+  z-index: 20;
+  width: 100%;
+  left: 0;
+  top: calc(67px + 50px);
+  /* чтобы все элементы не выделялись */
+  pointer-events: none;
+  /* opacity: 0; */
+}
+
+/* чтобы активный элемент выделался */
+.slides-container__slide--active {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.main-section__explore {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.slides-container__text {
+  width: 100%;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.slides-container__title {
+  margin: 0 0 70px 0;
+  font-family: 'Merriweather', sans-serif;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 112px;
+  line-height: 130px;
+  color: #fff;
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.slides-container__title--dark {
+  color: #000;
+}
+
+.designers-info {
+  display: flex;
+  opacity: 0;
+  transform: translateY(100px);
+}
+
+.desighers-info__descr {
+  margin-left: 30px;
+}
+
+.desighers-info__country {
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.desighers-info__by {
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #727272;
+}
+
+.shapes {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 33.5%;
+}
+
+.slide-bg {
+  overflow: hidden;
+  position: relative;
+  /* чтобы блоки не конфликтовали, так как тут текст перед картинкой немного идет, позволяет блокам расширяться как хотят */
+  flex-shrink: 0;
+  height: 560px;
+  width: 57.4%;
+  margin-left: -5.4%;
+}
+
+.slide-bg__inner {
+  position: absolute;
+  top: 0;
+  /* райт потому что анимация справа идет */
+  right: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.index {
+  z-index: 10;
+}
+
+.slide-bg__inner--current {
+  opacity: 1;
+  z-index: 11;
+}
+
+.slide-bg__link {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.shapes__item {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;
+}
+
+.shapes__item--current {
+  opacity: 1;
+  z-index: 11;
+  pointer-events: auto;
+}
+
+.shapes__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* так как в main-section min-height 750, от 749 можем делать медиа */
+
+@media (max-height: 749.9px) {
+  .media-section {
+    min-height: 640px;
+  }
+
+  .slides-container__title {
+    font-size: 100px;
+    line-height: 100px;
+    margin-bottom: 40px;
+  }
+
+  .slide-bg {
+    height: 450px;
+    width: 51%;
+  }
+}
+
+@media (max-width: 992px) {
+  .mouse {
+    display: none;
+  }
+
+  /* возвращаем курсор обычный, на всякий случай прописываем */
+  *,
+  *::after,
+  *::before {
+    box-sizing: border-box;
+    cursor: фгещ !important;
+  }
+
+  .preloader {
+    width: 500px;
+    text-align: center;
+    font-size: 55px;
+    line-height: 70px;
+  }
+
+  .designers-info__image {
+    width: 40%;
+    min-width: 150px;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .main-section {
+    padding-top: 100px;
+    /* чтобы мы могли увеличивать и уменьшать высоту блока, как мы хотим */
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .wrapper {
+    flex-direction: column-reverse;
+    justify-content: initial;
+  }
+
+  .main-section__explore {
+    display: none;
+  }
+
+  .slides-container__slide--active {
+    position: relative;
+  }
+
+  .slides-container__slide {
+    top: -90px;
+  }
+
+  .slide-bg {
+    width: 100%;
+    height: 350px;
+    margin-left: 0;
+  }
+
+  .slides-container__left {
+    width: 100%;
+    padding-top: 0;
+  }
+
+  .shapes {
+    display: none;
+  }
+
+  .designers-info__image {
+    width: auto;
+  }
+
+  .header__nav {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+
+  .slide-bg {
+    height: 250px;
+  }
+
+  .slides-container__title {
+    font-size: 80px;
+    line-height: 80px;
+  }
+
+  .preloader__forward {
+    width: 90%;
+    font-size: 35px;
+    line-height: 45px;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .slides-container__title {
+    font-size: 60px;
+    line-height: 70px;
+  }
+
+  .slides-container__slide {
+    top: -65px;
+  }
+
+  .designers-info__image {
+    width: 40%;
+  }
+}
+
+
+
+
+
